@@ -1,24 +1,46 @@
-# uuid-validator
+# UUID Validate TS
 
-[![Build Status](https://travis-ci.org/WatchBeam/uuid-validate.svg)](https://travis-ci.org/WatchBeam/uuid-validate)
+A TypeScript library for validating UUIDs (versions 1-7). Re-written in TypeScript and extended microsoft/uuid-validate library which is archived.
 
-Useful little package to validate UUIDs in Node.js. Usage:
+## Installation
 
-```js
-var validate = require('uuid-validate');
-
-// Let's validate a uuid version 1. If we don't pass a version, it'll
-// infer it based on the uuid itself.
-validate('95ecc380-afe9-11e4-9b6c-751b66dd541e'); // => true
-
-// We can tell it what version to expect, and if it gets the wrong
-// version, it'll return false.
-validate('95ecc380-afe9-11e4-9b6c-751b66dd541e', 1); // => true (it's version 1)
-validate('95ecc380-afe9-11e4-9b6c-751b66dd541e', 4); // => false (it's not version 4)
-
-// You can also pass buffers instead of strings.
-// This works for UUID versions 1 through 4
-
-// If you want to find out what version a UUID is:
-validate.version('95ecc380-afe9-11e4-9b6c-751b66dd541e'); // => 1
+```bash
+npm install @vientoeste/uuid-validate
 ```
+
+## Usage
+
+```typescript
+import { validate, extractVersion } from '@vientoeste/uuid-validate';
+
+// Validate a UUID (any version)
+validate({ uuid: '2ed6657d-e927-4aa3-84ef-718934192910' }); // true
+
+// Validate a specific UUID version
+validate({ uuid: '2ed6657d-e927-4aa3-84ef-718934192910', version: 4 }); // true
+validate({ uuid: '2ed6657d-e927-4aa3-84ef-718934192910', version: 1 }); // false
+
+// Get UUID version
+extractVersion('2ed6657d-e927-4aa3-84ef-718934192910'); // 4
+extractVersion('invalid-uuid'); // 0
+```
+
+## Supported UUID Versions
+
+- Version 1: Time-based
+- Version 2: DCE Security
+- Version 3: MD5 namespace
+- Version 4: Random
+- Version 5: SHA-1 namespace
+- Version 6: Reordered time-based
+- Version 7: Unix Timestamp-based
+
+## License
+
+MIT
+
+## Contributing
+
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
+Please make sure to update tests as appropriate.
